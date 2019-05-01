@@ -45,10 +45,11 @@ class LinkMatch(object):
     
     def match(self, point, unmatchedPoints = None):
         grids = self.find_point_belongGrid(point)
-        potentialLinks = self.extract_links(grids)
-        if isinstance(potentialLinks, list):
-            nearestLink = self.find_nearest_link(potentialLinks, point)
-            return nearestLink['ID']
+        if isinstance(grids, list):  
+            potentialLinks = self.extract_links(grids)
+            if isinstance(potentialLinks, list):
+                nearestLink = self.find_nearest_link(potentialLinks, point)
+                return nearestLink['ID']
         else:
             if unmatchedPoints is not None:
                 unmatchedPoints.append(point)
