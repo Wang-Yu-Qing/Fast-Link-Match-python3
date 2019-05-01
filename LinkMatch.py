@@ -43,11 +43,16 @@ class LinkMatch(object):
             return 'point\'s belonging grid and neighbours contains no link.'
         return links
     
-    def match(self, point):
+    def match(self, point, unmatchedPoints = None):
         grids = self.find_point_belongGrid(point)
         potentialLinks = self.extract_links(grids)
-        nearestLink = self.find_nearest_link(potentialLinks, point)
-        return nearestLink['ID']
+        if isinstance(potentialLinks, list):
+            nearestLink = self.find_nearest_link(potentialLinks, point)
+            return nearestLink['ID']
+        else:
+            if unmatchedPoints is not None:
+                unmatchedPoints.append(point)
+            return -1
 
 if __name__ == '__main__':
     LM = LinkMatch('link/shenzhen_mars.shp', 0, -1, 5, 'gbk')
